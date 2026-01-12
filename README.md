@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IKP Asystent Kardiologiczny
 
-## Getting Started
+AI-powered cardiology pre-screening assistant for the Polish healthcare system. Conducts structured medical interviews and generates comprehensive triage reports for cardiologists.
 
-First, run the development server:
+## Features
+
+- **Two-phase interview flow**: Predefined cardiology questions followed by AI-generated follow-ups
+- **Multi-provider LLM support**: OpenAI (including ChatGPT-5), Anthropic Claude, Azure OpenAI
+- **Professional reports**: On-screen display with PDF export
+- **Polish language**: All content in Polish, following gov.pl design system
+- **Configurable prompts**: Edit AI prompts in `prompts.json` without code changes
+- **Patient demographics**: Collects sex and age for risk-adjusted analysis
+
+## Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Configuration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### LLM Setup (Required)
 
-## Learn More
+Click the settings icon in the header to configure:
+1. Select provider (OpenAI, Anthropic, or Azure)
+2. Enter your API key
+3. Choose model (ChatGPT-5, GPT-4o, Claude Sonnet 4, etc.)
+4. Test connection and save
 
-To learn more about Next.js, take a look at the following resources:
+No environment variables required - settings are stored in browser localStorage.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Environment Variables (Optional)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# .env.local
 
-## Deploy on Vercel
+# Supabase (optional)
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Default LLM fallback
+LLM_PROVIDER=openai
+LLM_API_KEY=sk-...
+LLM_MODEL=gpt-4o
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Usage Flow
+
+1. **Enter patient data**: ID, sex, age
+2. **Phase 1**: Answer 30+ predefined cardiology questions
+3. **AI Analysis**: System generates personalized follow-up questions
+4. **Phase 2**: Answer 3-8 follow-up questions
+5. **Report**: View and download PDF report for cardiologist
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── page.tsx              # Landing page
+│   ├── interview/page.tsx    # Interview flow
+│   ├── report/page.tsx       # Report display
+│   └── api/                  # API routes
+├── components/ui/            # UI components
+├── lib/
+│   ├── prompts.json          # All AI prompts (editable)
+│   ├── questions/            # Predefined questions
+│   ├── llm/                  # LLM provider abstraction
+│   └── store.ts              # Zustand state
+└── types/                    # TypeScript types
+```
+
+## Customizing Prompts
+
+Edit `src/lib/prompts.json` to modify AI behavior:
+
+```json
+{
+  "analysis": {
+    "system": "...",  // Cardiologist analysis prompt
+    "userTemplate": "..."
+  },
+  "report": {
+    "system": "...",  // Report generation prompt
+    "userTemplate": "..."
+  }
+}
+```
+
+## Medical Grounding
+
+Based on:
+- ESC Guidelines (European Society of Cardiology)
+- ASCVD/EZ-CVD Risk Calculators
+- Polish medical interview standards (wywiad lekarski)
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Styling**: Tailwind CSS (gov.pl design system)
+- **State**: Zustand
+- **PDF**: jsPDF
+- **LLM**: OpenAI / Anthropic / Azure APIs
+
+## Scripts
+
+```bash
+npm run dev      # Development server
+npm run build    # Production build
+npm run start    # Start production
+npm run lint     # ESLint
+```
+
+## License
+
+MIT

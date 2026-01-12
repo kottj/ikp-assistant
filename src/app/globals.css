@@ -1,26 +1,188 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* gov.pl / pacjent.gov.pl color palette */
+  --govpl-primary: #0052A5;
+  --govpl-primary-dark: #003d7a;
+  --govpl-primary-light: #0066cc;
+  --govpl-secondary: #DC143C;
+  --govpl-accent: #007bff;
+
+  /* Backgrounds */
+  --background: #F5F5F5;
+  --background-white: #FFFFFF;
+  --background-card: #FFFFFF;
+
+  /* Text */
+  --foreground: #1A1A1A;
+  --foreground-muted: #6B7280;
+  --foreground-light: #9CA3AF;
+
+  /* Status colors */
+  --success: #00875A;
+  --success-light: #e6f7f0;
+  --warning: #F57F17;
+  --warning-light: #fff8e1;
+  --error: #D32F2F;
+  --error-light: #ffebee;
+  --info: #0288D1;
+  --info-light: #e1f5fe;
+
+  /* Borders */
+  --border: #E5E7EB;
+  --border-focus: #0052A5;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--govpl-primary);
+  --color-primary-dark: var(--govpl-primary-dark);
+  --color-primary-light: var(--govpl-primary-light);
+  --color-secondary: var(--govpl-secondary);
+  --color-accent: var(--govpl-accent);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+  --color-border: var(--border);
+  --color-muted: var(--foreground-muted);
+  --font-sans: "Source Sans Pro", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base styles */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--govpl-primary);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground-muted);
+}
+
+/* gov.pl styled components */
+.govpl-card {
+  background: var(--background-white);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.govpl-btn-primary {
+  background: var(--govpl-primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.govpl-btn-primary:hover {
+  background: var(--govpl-primary-dark);
+}
+
+.govpl-btn-primary:disabled {
+  background: var(--foreground-muted);
+  cursor: not-allowed;
+}
+
+.govpl-btn-secondary {
+  background: transparent;
+  color: var(--govpl-primary);
+  border: 2px solid var(--govpl-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.govpl-btn-secondary:hover {
+  background: var(--govpl-primary);
+  color: white;
+}
+
+.govpl-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.govpl-input:focus {
+  border-color: var(--govpl-primary);
+  box-shadow: 0 0 0 3px rgba(0, 82, 165, 0.1);
+}
+
+/* Progress bar styles */
+.govpl-progress {
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.govpl-progress-bar {
+  height: 100%;
+  background: var(--govpl-primary);
+  transition: width 0.3s ease;
+}
+
+/* Status badges */
+.govpl-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.govpl-badge-success {
+  background: var(--success-light);
+  color: var(--success);
+}
+
+.govpl-badge-warning {
+  background: var(--warning-light);
+  color: var(--warning);
+}
+
+.govpl-badge-error {
+  background: var(--error-light);
+  color: var(--error);
+}
+
+.govpl-badge-info {
+  background: var(--info-light);
+  color: var(--info);
 }
