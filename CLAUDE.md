@@ -7,6 +7,12 @@
 **Language:** Polish (all user-facing content)
 **Design:** Based on gov.pl / pacjent.gov.pl design system
 
+## Live Demo & Repository
+
+- **Live App:** https://ikp-assistant.vercel.app
+- **GitHub:** https://github.com/kottj/ikp-assistant
+- **Database:** Supabase (PostgreSQL)
+
 ## Common Commands
 
 ```bash

@@ -2,6 +2,8 @@
 
 AI-powered cardiology pre-screening assistant for the Polish healthcare system. Conducts structured medical interviews and generates comprehensive triage reports for cardiologists.
 
+**[Live Demo](https://ikp-assistant.vercel.app)** | **[GitHub](https://github.com/kottj/ikp-assistant)**
+
 ## Features
 
 - **Two-phase interview flow**: Predefined cardiology questions followed by AI-generated follow-ups
