@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Question, QuestionOption } from '@/types';
 import { clsx } from 'clsx';
 
@@ -13,6 +13,11 @@ interface QuestionCardProps {
 
 export function QuestionCard({ question, value, onChange, disabled = false }: QuestionCardProps) {
   const [localValue, setLocalValue] = useState(value);
+
+  // Sync local state when value prop changes (e.g., navigating to next question)
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
 
   const handleChange = (newValue: string | string[]) => {
     setLocalValue(newValue);
