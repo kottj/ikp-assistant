@@ -107,7 +107,7 @@ export const useInterviewStore = create<InterviewStore>((set, get) => ({
   },
 
   completePhase1: async () => {
-    set({ status: 'analyzing', isLoading: true });
+    set({ status: 'analyzing', isLoading: true, error: null });
   },
 
   setPhase2Questions: (questions: Question[], analysis: AnalysisResult) => {
@@ -121,7 +121,7 @@ export const useInterviewStore = create<InterviewStore>((set, get) => ({
   },
 
   completePhase2: async () => {
-    set({ status: 'generating_report', isLoading: true });
+    set({ status: 'generating_report', isLoading: true, error: null });
   },
 
   setReport: (report: ReportContent) => {
@@ -133,7 +133,15 @@ export const useInterviewStore = create<InterviewStore>((set, get) => ({
   },
 
   setError: (error: string | null) => {
-    set({ error, isLoading: false });
+    const { status } = get();
+    // Reset status back to the phase that failed, so error message can be displayed
+    let newStatus = status;
+    if (status === 'analyzing') {
+      newStatus = 'phase1';
+    } else if (status === 'generating_report') {
+      newStatus = 'phase2';
+    }
+    set({ error, isLoading: false, status: newStatus });
   },
 
   setLoading: (loading: boolean) => {

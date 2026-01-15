@@ -65,10 +65,10 @@ export const PROVIDER_INFO: Record<LLMProvider, { name: string; description: str
 
 export const MODEL_OPTIONS: Record<LLMProvider, { value: string; label: string }[]> = {
   openai: [
-    { value: 'chatgpt-5', label: 'ChatGPT-5 (Latest)' },
     { value: 'gpt-4o', label: 'GPT-4o (Recommended)' },
     { value: 'gpt-4-turbo', label: 'GPT-4 Turbo' },
     { value: 'gpt-4o-mini', label: 'GPT-4o Mini (Faster, cheaper)' },
+    { value: 'gpt-3.5-turbo', label: 'GPT-3.5 Turbo (Budget)' },
   ],
   anthropic: [
     { value: 'claude-sonnet-4-20250514', label: 'Claude Sonnet 4 (Recommended)' },

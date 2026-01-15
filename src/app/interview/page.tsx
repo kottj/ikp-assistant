@@ -9,6 +9,7 @@ import { QuestionCard } from '@/components/ui/QuestionCard';
 import { Button } from '@/components/ui/Button';
 import { questionCategories } from '@/lib/questions/cardiology';
 import { getLLMSettings } from '@/lib/llm-config';
+import { fetchWithRetry } from '@/lib/fetch-with-retry';
 import type { AnalysisResult, Question } from '@/types';
 
 export default function InterviewPage() {
@@ -74,6 +75,7 @@ export default function InterviewPage() {
     try {
       const phase1Responses = getPhase1Responses();
       const formattedResponses = phase1Responses.map((r) => ({
+        questionId: r.question_id,
         question: r.question_text,
         answer: r.answer,
       }));
@@ -81,7 +83,7 @@ export default function InterviewPage() {
       const llmSettings = getLLMSettings();
       const patientDemographics = useInterviewStore.getState().patientDemographics;
 
-      const response = await fetch('/api/analyze', {
+      const response = await fetchWithRetry('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -126,7 +128,7 @@ export default function InterviewPage() {
 
       const llmSettings = getLLMSettings();
 
-      const response = await fetch('/api/generate-report', {
+      const response = await fetchWithRetry('/api/generate-report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
